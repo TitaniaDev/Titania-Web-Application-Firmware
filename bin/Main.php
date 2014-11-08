@@ -65,7 +65,17 @@
         throw new FirmwareException("Session error, see console", 70);
     }
     
-    // Done //
+    // Activate extensions //
     
+    $out->WriteLn("Now activating extensions...");
+
+    $files = glob(dirname(__FILE__) . '/Extend/*.php');
+
+    foreach ($files as $file) {
+        $out->Write("Activating: " . str_replace(".php", "", str_replace(array("-","_"), " ", basename($file))) . "... ");
+        require_once($file);
+        $out->WriteLn("done.");
+    }
+
     $out->WriteLn("Application setup complete. Executing...");
 ?>
